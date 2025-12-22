@@ -29,6 +29,14 @@ run-shell ~/.tmux/plugins/atom-one-dark/atom-one-dark.tmux
 
 Requires a [Nerd Font](https://www.nerdfonts.com/) for icons.
 
+### Transparent background
+
+For terminals with transparency/blur (e.g. Ghostty, Kitty, Alacritty):
+
+```sh
+set -g @atom_one_dark_transparent "on"
+```
+
 ### Window tabs
 
 ```sh

@@ -32,21 +32,32 @@ main() {
   # shellcheck source=atom-one-dark.tmuxtheme
   source /dev/stdin <<<"$(sed -e "/^[^#].*=/s/^/local /" "${PLUGIN_DIR}/atom-one-dark.tmuxtheme")"
 
+  local transparent
+  transparent="$(get_tmux_option "@atom_one_dark_transparent" "off")"
+  readonly transparent
+
+  local status_bg="$thm_bg"
+  local segment_bg="$thm_gray"
+  if [[ "${transparent}" == "on" ]]; then
+    status_bg="default"
+    segment_bg="default"
+  fi
+
   set status "on"
-  set status-bg "${thm_bg}"
+  set status-bg "${status_bg}"
   set status-justify "left"
   set status-left-length "100"
   set status-right-length "100"
 
-  set message-style "fg=${thm_cyan},bg=${thm_gray},align=centre"
-  set message-command-style "fg=${thm_cyan},bg=${thm_gray},align=centre"
+  set message-style "fg=${thm_cyan},bg=${segment_bg},align=centre"
+  set message-command-style "fg=${thm_cyan},bg=${segment_bg},align=centre"
 
   set pane-border-style "fg=${thm_gray}"
   set pane-active-border-style "fg=${thm_blue}"
 
-  setw window-status-activity-style "fg=${thm_fg},bg=${thm_bg},none"
+  setw window-status-activity-style "fg=${thm_fg},bg=${status_bg},none"
   setw window-status-separator ""
-  setw window-status-style "fg=${thm_fg},bg=${thm_bg},none"
+  setw window-status-style "fg=${thm_fg},bg=${status_bg},none"
 
   local wt_enabled
   wt_enabled="$(get_tmux_option "@atom_one_dark_window_tabs_enabled" "off")"
@@ -73,34 +84,34 @@ main() {
   readonly date_time
 
   local show_directory
-  readonly show_directory="#[fg=$thm_pink,bg=$thm_bg,nobold,nounderscore,noitalics]$right_separator#[fg=$thm_bg,bg=$thm_pink,nobold,nounderscore,noitalics]  #[fg=$thm_fg,bg=$thm_gray] #{b:pane_current_path} #{?client_prefix,#[fg=$thm_red]"
+  readonly show_directory="#[fg=$thm_pink,bg=$status_bg,nobold,nounderscore,noitalics]$right_separator#[fg=$thm_bg,bg=$thm_pink,nobold,nounderscore,noitalics]  #[fg=$thm_fg,bg=$segment_bg] #{b:pane_current_path} #{?client_prefix,#[fg=$thm_red]"
 
   local show_window
-  readonly show_window="#[fg=$thm_pink,bg=$thm_bg,nobold,nounderscore,noitalics]$right_separator#[fg=$thm_bg,bg=$thm_pink,nobold,nounderscore,noitalics] #[fg=$thm_fg,bg=$thm_gray] #W #{?client_prefix,#[fg=$thm_red]"
+  readonly show_window="#[fg=$thm_pink,bg=$status_bg,nobold,nounderscore,noitalics]$right_separator#[fg=$thm_bg,bg=$thm_pink,nobold,nounderscore,noitalics] #[fg=$thm_fg,bg=$segment_bg] #W #{?client_prefix,#[fg=$thm_red]"
 
   local show_session
-  readonly show_session="#[fg=$thm_green]}#[bg=$thm_gray]$right_separator#{?client_prefix,#[bg=$thm_red],#[bg=$thm_green]}#[fg=$thm_bg] #[fg=$thm_fg,bg=$thm_gray] #S "
+  readonly show_session="#[fg=$thm_green]}#[bg=$segment_bg]$right_separator#{?client_prefix,#[bg=$thm_red],#[bg=$thm_green]}#[fg=$thm_bg] #[fg=$thm_fg,bg=$segment_bg] #S "
 
   local show_directory_in_window_status
-  readonly show_directory_in_window_status="#[fg=$thm_bg,bg=$thm_blue] #I #[fg=$thm_fg,bg=$thm_gray] #W "
+  readonly show_directory_in_window_status="#[fg=$thm_bg,bg=$thm_blue] #I #[fg=$thm_fg,bg=$segment_bg] #W "
 
   local show_directory_in_window_status_current
-  readonly show_directory_in_window_status_current="#[fg=colour232,bg=$thm_orange] #I #[fg=colour255,bg=colour237] #(echo '#{pane_current_path}' | rev | cut -d'/' -f-2 | rev) "
+  readonly show_directory_in_window_status_current="#[fg=colour232,bg=$thm_orange] #I #[fg=colour255,bg=$segment_bg] #(echo '#{pane_current_path}' | rev | cut -d'/' -f-2 | rev) "
 
   local show_window_in_window_status
-  readonly show_window_in_window_status="#[fg=$thm_fg,bg=$thm_bg] #W #[fg=$thm_bg,bg=$thm_blue] #I#[fg=$thm_blue,bg=$thm_bg]$left_separator#[fg=$thm_fg,bg=$thm_bg,nobold,nounderscore,noitalics] "
+  readonly show_window_in_window_status="#[fg=$thm_fg,bg=$status_bg] #W #[fg=$thm_bg,bg=$thm_blue] #I#[fg=$thm_blue,bg=$status_bg]$left_separator#[fg=$thm_fg,bg=$status_bg,nobold,nounderscore,noitalics] "
 
   local show_window_in_window_status_current
-  readonly show_window_in_window_status_current="#[fg=$thm_fg,bg=$thm_gray] #W #[fg=$thm_bg,bg=$thm_orange] #I#[fg=$thm_orange,bg=$thm_bg]$left_separator#[fg=$thm_fg,bg=$thm_bg,nobold,nounderscore,noitalics] "
+  readonly show_window_in_window_status_current="#[fg=$thm_fg,bg=$segment_bg] #W #[fg=$thm_bg,bg=$thm_orange] #I#[fg=$thm_orange,bg=$status_bg]$left_separator#[fg=$thm_fg,bg=$status_bg,nobold,nounderscore,noitalics] "
 
   local show_user
-  readonly show_user="#[fg=$thm_blue,bg=$thm_gray]$right_separator#[fg=$thm_bg,bg=$thm_blue] #[fg=$thm_fg,bg=$thm_gray] #(whoami) "
+  readonly show_user="#[fg=$thm_blue,bg=$segment_bg]$right_separator#[fg=$thm_bg,bg=$thm_blue] #[fg=$thm_fg,bg=$segment_bg] #(whoami) "
 
   local show_host
-  readonly show_host="#[fg=$thm_blue,bg=$thm_gray]$right_separator#[fg=$thm_bg,bg=$thm_blue]󰒋 #[fg=$thm_fg,bg=$thm_gray] #H "
+  readonly show_host="#[fg=$thm_blue,bg=$segment_bg]$right_separator#[fg=$thm_bg,bg=$thm_blue]󰒋 #[fg=$thm_fg,bg=$segment_bg] #H "
 
   local show_date_time
-  readonly show_date_time="#[fg=$thm_blue,bg=$thm_gray]$right_separator#[fg=$thm_bg,bg=$thm_blue] #[fg=$thm_fg,bg=$thm_gray] $date_time "
+  readonly show_date_time="#[fg=$thm_blue,bg=$segment_bg]$right_separator#[fg=$thm_bg,bg=$thm_blue] #[fg=$thm_fg,bg=$segment_bg] $date_time "
 
   local right_column1=$show_window
   local right_column2=$show_session
