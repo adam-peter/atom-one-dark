@@ -44,7 +44,7 @@ main() {
   fi
 
   set status "on"
-  set status-bg "${status_bg}"
+  set status-style "bg=${status_bg},fg=${thm_fg}"
   set status-justify "left"
   set status-left-length "100"
   set status-right-length "100"
