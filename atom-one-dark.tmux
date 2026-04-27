@@ -29,8 +29,14 @@ setw() {
 main() {
   local tmux_commands=()
 
-  # shellcheck source=atom-one-dark.tmuxtheme
-  source /dev/stdin <<<"$(sed -e "/^[^#].*=/s/^/local /" "${PLUGIN_DIR}/atom-one-dark.tmuxtheme")"
+  local variant
+  variant="$(get_tmux_option "@atom_one_dark_variant" "dark")"
+  local palette_file="${PLUGIN_DIR}/themes/${variant}.tmuxtheme"
+  if [ ! -f "$palette_file" ]; then
+    palette_file="${PLUGIN_DIR}/themes/dark.tmuxtheme"
+  fi
+  # shellcheck source=/dev/null
+  source /dev/stdin <<<"$(sed -e "/^[^#].*=/s/^/local /" "$palette_file")"
 
   local transparent
   transparent="$(get_tmux_option "@atom_one_dark_transparent" "off")"
@@ -96,7 +102,7 @@ main() {
   readonly show_directory_in_window_status="#[fg=$thm_bg,bg=$thm_blue] #I #[fg=$thm_fg,bg=$segment_bg] #W "
 
   local show_directory_in_window_status_current
-  readonly show_directory_in_window_status_current="#[fg=colour232,bg=$thm_orange] #I #[fg=colour255,bg=$segment_bg] #W "
+  readonly show_directory_in_window_status_current="#[fg=$thm_bg,bg=$thm_orange] #I #[fg=$thm_fg,bg=$segment_bg] #W "
 
   local show_window_in_window_status
   readonly show_window_in_window_status="#[fg=$thm_fg,bg=$status_bg] #W #[fg=$thm_bg,bg=$thm_blue] #I#[fg=$thm_blue,bg=$status_bg]$left_separator#[fg=$thm_fg,bg=$status_bg,nobold,nounderscore,noitalics] "

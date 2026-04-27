@@ -29,6 +29,24 @@ run-shell ~/.tmux/plugins/atom-one-dark/atom-one-dark.tmux
 
 Requires a [Nerd Font](https://www.nerdfonts.com/) for icons.
 
+### Variant (light / dark)
+
+```sh
+set -g @atom_one_dark_variant "dark"   # or "light" — default "dark"
+```
+
+#### Auto-switch with macOS appearance
+
+With tmux 3.6+ and a terminal that reports its theme (e.g. Ghostty), wire the
+built-in `client-{dark,light}-theme` hooks to flip the variant automatically:
+
+```sh
+set-hook -g client-dark-theme  'set -g @atom_one_dark_variant "dark";  run-shell "~/.local/share/tmux/plugins/atom-one-dark/atom-one-dark.tmux"'
+set-hook -g client-light-theme 'set -g @atom_one_dark_variant "light"; run-shell "~/.local/share/tmux/plugins/atom-one-dark/atom-one-dark.tmux"'
+```
+
+Adjust the path if your TPM plugin directory is elsewhere.
+
 ### Transparent background
 
 For terminals with transparency/blur (e.g. Ghostty, Kitty, Alacritty):

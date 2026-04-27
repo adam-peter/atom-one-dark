@@ -1,0 +1,17 @@
+# NOTE: you can use vars with $<var> and ${<var>} as long as the str is double quoted: ""
+# WARNING: hex colors can't contain capital letters
+
+# --> Atom One Light
+thm_bg="#fafafa"
+thm_fg="#383a42"
+thm_cyan="#0184bc"
+thm_black="#101012"
+thm_gray="#e6e6e6"
+thm_magenta="#a626a4"
+thm_pink="#a626a4"
+thm_red="#e45649"
+thm_green="#50a14f"
+thm_yellow="#986801"
+thm_blue="#4078f2"
+thm_orange="#c18401"
+thm_black4="#a0a1a7"
